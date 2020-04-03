@@ -72,7 +72,7 @@
             <el-pagination v-if="!loading"
                 class="pagination"
                 background
-                layout="prev, pager, next"
+                layout="prev, pager, next, sizes"
                 :total="limit"
                 @current-change="handlePageChange"
                 @size-change="handleSizeChange"
