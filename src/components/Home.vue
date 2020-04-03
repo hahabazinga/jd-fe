@@ -1,7 +1,6 @@
 <template>
-    <div id="app">
+ 
         <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
-
 
         <el-main
             class="main"
@@ -15,9 +14,14 @@
                 >
                     暂无数据
                 </p>
-                <div class="item" v-for="item in itemList"  @click="onItemClick(item)" :key="item.id">
+                <div
+                    class="item"
+                    v-for="item in itemList"
+                    @click="onItemClick(item)"
+                    :key="item.id"
+                >
                     <div>
-                        <el-image :src="item.img" class="image" ></el-image>
+                        <el-image :src="item.img" class="image"></el-image>
                         <div style="textAlign: left;">
                             <div
                                 class="red"
@@ -65,15 +69,20 @@
                     </div>
                 </div>
             </div>
-            <el-pagination
+            <el-pagination v-if="!loading"
                 class="pagination"
                 background
                 layout="prev, pager, next"
                 :total="limit"
+                @current-change="handlePageChange"
+                @size-change="handleSizeChange"
+                :page-sizes="[10, 20, 50, 100]"
+                :page-size="pageSize"
+                :current-page.sync="currentPage"
             >
             </el-pagination>
         </el-main>
-    </div>
+
 </template>
 
 <script>
@@ -89,18 +98,27 @@ export default {
             searchText: '',
             itemList: [],
             loading: false,
-            limit: 0
+            limit: 0,
+            searchKey: '',
+            pageSize: 20,
+            currentPage: 1
         };
     },
     created: function() {
-        this.fetchItemList();
+        this.fetchItemList(1, 20, '');
+    },
+    watch: {
+        $route: function() {
+            this.searchKey = this.$route.query.searchKey;
+            this.fetchItemList(1, 20, this.searchKey);
+        }
     },
     methods: {
-        fetchItemList: function() {
+        fetchItemList: function(startPage, pageSize, searchKey) {
             this.loading = true;
             // 模拟异步
             setTimeout(() => {
-                getItemList(1, 20).then(result => {
+                getItemList(startPage, pageSize, searchKey).then(result => {
                     const { data, limit } = result;
                     this.limit = limit;
                     this.itemList = data;
@@ -108,10 +126,18 @@ export default {
                 this.loading = false;
             }, 1000);
         },
-        onItemClick: function({id}){
-            if(id){
-                this.$router.push(`/list/${id}`)
+        onItemClick: function({ id }) {
+            if (id) {
+                this.$router.push(`/list/${id}`);
             }
+        },
+        handlePageChange: function(currentPage) {
+            this.currentPage = currentPage;
+            this.fetchItemList(currentPage, this.pageSize, this.searchKey);
+        },
+        handleSizeChange: function(pageSize) {
+            this.pageSize = pageSize;
+            this.fetchItemList(this.currentPage, this.pageSize, this.searchKey);
         }
     }
 };
@@ -131,13 +157,7 @@ export default {
     height: 100%;
     box-sizing: border-box;
 }
-.header {
-    height: 20%;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+
 .main {
     height: 80%;
     box-sizing: border-box;

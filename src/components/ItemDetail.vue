@@ -1,7 +1,7 @@
 <template>
     <div class="detail">
         <el-page-header
-            style="margin: 20px auto 20px 10%"
+            style="margin: 20px auto 20px 20%"
             @back="goBack"
             content="详情页面"
         >
@@ -26,29 +26,37 @@
             </div>
             <div class="info">
                 <el-breadcrumb separator-class="el-icon-arrow-right">
-                   
-                    <el-breadcrumb-item>{{item.b_name}}</el-breadcrumb-item>
-                    <el-breadcrumb-item>{{item.s_name}}</el-breadcrumb-item>
+                    <el-breadcrumb-item>{{ item.b_name }}</el-breadcrumb-item>
+                    <el-breadcrumb-item>{{ item.s_name }}</el-breadcrumb-item>
                 </el-breadcrumb>
-                <p class="name text">{{item.book_name}}</p>
-                <p class="author text">作者：{{item.book_author}}</p>
-                <p class="price red text"><span class="publish">价格：</span> <em style="fontStyle: normal">￥</em>{{item.price}}</p>
-                <p class="publish">出版：{{item.publisher}}<span style="paddingLeft: 20px">{{item.publish_date}}</span></p>
+                <p class="name text">{{ item.book_name }}</p>
+                <p class="author text">作者：{{ item.book_author }}</p>
+                <p class="price red text">
+                    <span class="publish">价格：</span>
+                    <em style="fontStyle: normal">￥</em>{{ item.price }}
+                </p>
+                <p class="publish">
+                    出版：{{ item.publisher
+                    }}<span style="paddingLeft: 20px">{{
+                        item.publish_date
+                    }}</span>
+                </p>
                 <div class="text">
-                                <a
-                                    class="text-link"
-                                    style="color: #666"
-                                    target="_blank"
-                                    :href="item.book_href"
-                                    ><strong class="comment">{{
-                                        item.comments || 0
-                                    }}</strong
-                                    >条评价<strong class="good_rate">{{
-                                        item.good_rate || '--'
-                                    }}</strong
-                                    > 好评率</a
-                                >
-                            </div>
+                    <a
+                        class="text-link"
+                        style="color: #666"
+                        target="_blank"
+                        :href="item.book_href"
+                        ><strong class="comment">{{
+                            item.comments || 0
+                        }}</strong
+                        >条评价<strong class="good_rate">{{
+                            item.good_rate || '--'
+                        }}</strong>
+                        好评率</a
+                    >
+                </div>
+                <p class="publish text">简介：{{ item.description || '--' }}</p>
             </div>
         </div>
     </div>
@@ -91,33 +99,33 @@ export default {
     display: flex;
     flex-direction: row;
     margin: 10% auto;
-    width: 80%;
+    width: 60%;
 }
 .carousel {
     width: 360px;
 }
-.text{
+.text {
     text-align: left;
 }
-.name{
-    font: 700 16px Arial,"microsoft yahei";
+.name {
+    font: 700 16px Arial, 'microsoft yahei';
     color: #666;
     padding-top: 10px;
     line-height: 28px;
     margin-bottom: 5px;
 }
-.author{
-     color:  #005aa0
+.author {
+    color: #005aa0;
 }
 .red {
     color: #e4393c;
 }
-.price{
+.price {
     font-size: 20px;
 }
-.publish{
+.publish {
     font-size: 12px;
-    color: #999
+    color: #999;
 }
 .comment {
     color: #646fb0;

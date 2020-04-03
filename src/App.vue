@@ -6,11 +6,18 @@
                 placeholder="请输入搜索商品名称"
                 v-model="searchText"
                 class="search-input"
+                @change="searchChange"
             >
-                <el-button slot="append" icon="el-icon-search"></el-button>
+                <el-button
+                    slot="append"
+                    @click="search"
+                    icon="el-icon-search"
+                ></el-button>
             </el-input>
+            <div class="line"></div>
+                   
+
         </div>
-                <el-divider></el-divider>
 
         <router-view></router-view>
     </div>
@@ -24,9 +31,24 @@ export default {
     //     HelloWorld
     // },
     data() {
-       return {}
+        return {
+            searchText: '',
+            oldText: undefined
+        };
     },
-    
+    methods: {
+        search() {
+
+            if(this.searchText !== this.oldText)
+                this.oldText = this.searchText;
+                console.log(this.searchText, this.oldText)
+                this.$router.push(`/list?searchKey=${this.searchText}`);
+            
+        },
+        searchChange(){
+            this.search()
+        }
+    }
 };
 </script>
 
@@ -37,8 +59,14 @@ export default {
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
-
     height: calc(100vh - 16px);
+}
+.header {
+    height: 20%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 </style>

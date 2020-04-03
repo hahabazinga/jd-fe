@@ -31,7 +31,8 @@ const listItemDefault = {
     good_rate: '99%'
 };
 
-export const getItemList = (currentPage, pageSize) => {
+export const getItemList = (currentPage, pageSize, searchKey) => {
+    console.log(searchKey)
     const data = Array.from({ length: pageSize }).map((item, index) => ({
         ...listItemDefault,
         id: currentPage * pageSize + index + 1
