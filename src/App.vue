@@ -6,7 +6,7 @@
                 placeholder="请输入搜索商品名称"
                 v-model="searchText"
                 class="search-input"
-                @change="searchChange"
+                @keyup.enter.native="searchChange"
             >
                 <el-button
                     slot="append"
@@ -15,8 +15,6 @@
                 ></el-button>
             </el-input>
             <div class="line"></div>
-                   
-
         </div>
 
         <router-view></router-view>
@@ -38,15 +36,12 @@ export default {
     },
     methods: {
         search() {
-
-            if(this.searchText !== this.oldText)
+            if (this.searchText !== this.oldText)
                 this.oldText = this.searchText;
-                console.log(this.searchText, this.oldText)
-                this.$router.push(`/list?searchKey=${this.searchText}`);
-            
+            this.$router.push(`/list?searchKey=${this.searchText}`);
         },
-        searchChange(){
-            this.search()
+        searchChange() {
+            this.search();
         }
     }
 };
@@ -68,5 +63,4 @@ export default {
     justify-content: center;
     align-items: center;
 }
-
 </style>
